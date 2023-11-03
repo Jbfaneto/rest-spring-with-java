@@ -6,7 +6,7 @@ import com.jbfaneto.springandjava.DTO.PersonDTO;
 import com.jbfaneto.springandjava.exceptions.ResourceNotFoundException;
 import com.jbfaneto.springandjava.models.Person;
 import com.jbfaneto.springandjava.repositories.PersonRepository;
-import mapper.DozerMapper;
+import mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +22,11 @@ public class PersonService {
     public PersonDTO findById(Long id) {
         logger.info("findById");
         var entity =repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-        return DozerMapper.parseObject(entity, PersonDTO.class);
+        return Mapper.parseObject(entity, PersonDTO.class);
     }
     public List<PersonDTO> findAll(){
         logger.info("findAll");
-        return DozerMapper.parseListObjects(repository.findAll(), PersonDTO.class);
+        return Mapper.parseListObjects(repository.findAll(), PersonDTO.class);
 
 
     }
@@ -34,8 +34,8 @@ public class PersonService {
     public PersonDTO create(PersonDTO person){
         logger.info("create");
         person.setId(null);
-        var entity = DozerMapper.parseObject(person, Person.class);
-        var dto =  DozerMapper.parseObject(repository.save(entity), PersonDTO.class);
+        var entity = Mapper.parseObject(person, Person.class);
+        var dto =  Mapper.parseObject(repository.save(entity), PersonDTO.class);
         return dto;
 
     }
@@ -48,7 +48,7 @@ public class PersonService {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        var dto =  DozerMapper.parseObject(repository.save(entity), PersonDTO.class);
+        var dto =  Mapper.parseObject(repository.save(entity), PersonDTO.class);
         return dto;
 
     }

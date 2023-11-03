@@ -3,7 +3,7 @@ package com.jbfaneto.springandjava.unitTest.mapper;
 import com.jbfaneto.springandjava.DTO.PersonDTO;
 import com.jbfaneto.springandjava.mocks.MockPerson;
 import com.jbfaneto.springandjava.models.Person;
-import mapper.DozerMapper;
+import mapper.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DozenConverterTest {
+public class MapperConverterTest {
     MockPerson inputObject;
 
     @BeforeEach
@@ -21,7 +21,7 @@ public class DozenConverterTest {
 
     @Test
     public void parseEntityToDTOTest() {
-        PersonDTO output = DozerMapper.parseObject(inputObject.mockEntity(), PersonDTO.class);
+        PersonDTO output = Mapper.parseObject(inputObject.mockEntity(), PersonDTO.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -31,7 +31,7 @@ public class DozenConverterTest {
 
     @Test
     public void parseEntityListToDTOListTest() {
-        List<PersonDTO> outputList = DozerMapper.parseListObjects(inputObject.mockEntityList(), PersonDTO.class);
+        List<PersonDTO> outputList = Mapper.parseListObjects(inputObject.mockEntityList(), PersonDTO.class);
         PersonDTO outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
@@ -59,7 +59,7 @@ public class DozenConverterTest {
 
     @Test
     public void parseDTOToEntityTest() {
-        Person output = DozerMapper.parseObject(inputObject.mockVO(), Person.class);
+        Person output = Mapper.parseObject(inputObject.mockVO(), Person.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -69,7 +69,7 @@ public class DozenConverterTest {
 
     @Test
     public void parserDTOListToEntityListTest() {
-        List<Person> outputList = DozerMapper.parseListObjects(inputObject.mockVOList(), Person.class);
+        List<Person> outputList = Mapper.parseListObjects(inputObject.mockVOList(), Person.class);
         Person outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
