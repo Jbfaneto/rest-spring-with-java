@@ -1,5 +1,6 @@
 package com.jbfaneto.springandjava.controllers;
 
+import com.jbfaneto.springandjava.DTO.PersonDTO;
 import com.jbfaneto.springandjava.models.Person;
 import com.jbfaneto.springandjava.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +20,26 @@ public class PersonController {
 
     @GetMapping(value="/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> findById(@PathVariable Long id) {
-        Person person = service.findById(id);
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
+        PersonDTO person = service.findById(id);
         return ResponseEntity.ok().body(person);
     }
     @GetMapping(value="/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Person>> findAll(){
-        List<Person> list = service.findAll();
+    public ResponseEntity<List<PersonDTO>> findAll(){
+        List<PersonDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping(value="/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> create(@RequestBody Person person){
-        Person newPerson = service.create(person);
+    public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person){
+        PersonDTO newPerson = service.create(person);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPerson.getId()).toUri();
         return ResponseEntity.created(uri).build();
 
     }
     @PutMapping(value="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Person person){
-        Person obj = service.update(id, person);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PersonDTO person){
+        PersonDTO obj = service.update(id, person);
         return ResponseEntity.ok().body(obj);
     }
 
