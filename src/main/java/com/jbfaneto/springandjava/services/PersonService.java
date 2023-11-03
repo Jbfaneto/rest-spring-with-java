@@ -19,11 +19,6 @@ public class PersonService {
 
     public Person findById(Long id) {
         logger.info("findById");
-        Person person = new Person();
-        person.setFirstName("João");
-        person.setLastName("Batista");
-        person.setAddress("Rio Claro - RJ");
-        person.setGender("male");
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
     }
     public List<Person> findAll(){
