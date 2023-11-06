@@ -1,4 +1,4 @@
-package com.jbfaneto.springandjava.DTO;
+package com.jbfaneto.springandjava.DTO.v1;
 
 import java.io.Serializable;
 

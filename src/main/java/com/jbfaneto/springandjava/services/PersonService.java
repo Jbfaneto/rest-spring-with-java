@@ -2,11 +2,13 @@ package com.jbfaneto.springandjava.services;
 
 
 
-import com.jbfaneto.springandjava.DTO.PersonDTO;
+import com.jbfaneto.springandjava.DTO.v1.PersonDTO;
+import com.jbfaneto.springandjava.DTO.v2.PersonDTOV2;
 import com.jbfaneto.springandjava.exceptions.ResourceNotFoundException;
 import com.jbfaneto.springandjava.models.Person;
 import com.jbfaneto.springandjava.repositories.PersonRepository;
 import mapper.Mapper;
+import mapper.custom.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ import java.util.logging.Logger;
 public class PersonService {
     @Autowired
     private PersonRepository repository;
+
+
+    private PersonMapper personMapper = new PersonMapper();
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
     public PersonDTO findById(Long id) {
@@ -36,6 +41,13 @@ public class PersonService {
         person.setId(null);
         var entity = Mapper.parseObject(person, Person.class);
         var dto =  Mapper.parseObject(repository.save(entity), PersonDTO.class);
+        return dto;
+    }
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("create v2");
+        person.setId(null);
+        var entity = personMapper.convertDTOToEntity(person);
+        var dto = personMapper.convertEntityToDTO(repository.save(entity));
         return dto;
 
     }

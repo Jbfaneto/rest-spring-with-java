@@ -1,7 +1,8 @@
 package com.jbfaneto.springandjava.controllers;
 
-import com.jbfaneto.springandjava.DTO.PersonDTO;
-import com.jbfaneto.springandjava.models.Person;
+
+import com.jbfaneto.springandjava.DTO.v1.PersonDTO;
+import com.jbfaneto.springandjava.DTO.v2.PersonDTOV2;
 import com.jbfaneto.springandjava.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,9 +35,16 @@ public class PersonController {
     public ResponseEntity<PersonDTO> create(@RequestBody PersonDTO person){
         PersonDTO newPerson = service.create(person);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPerson.getId()).toUri();
-        return ResponseEntity.created(uri).build();
-
+        return ResponseEntity.ok().body(newPerson);
     }
+
+    @PostMapping(value="/create/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonDTOV2> createV2(@RequestBody PersonDTOV2 person){
+        PersonDTOV2 newPerson = service.createV2(person);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPerson.getId()).toUri();
+        return ResponseEntity.ok().body(newPerson);
+    }
+
     @PutMapping(value="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PersonDTO person){
         PersonDTO obj = service.update(id, person);
